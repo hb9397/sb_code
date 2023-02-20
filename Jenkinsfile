@@ -9,13 +9,13 @@ pipeline {
     gitName = 'hb9397'
     gitEmail = 'hb9397@naver.com'
     githubCredential = 'git_cre'
-    dockerHubRegistry = 'oolralra/sbimage'
+    dockerHubRegistry = 'leehb97/sbimage'
     dockerHubRegistryCredential = 'docker_cre'
   }
   stages {
     stage('Checkout Github') {
       steps {
-          checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: githubCredential, url: 'https://github.com/hb9397/sb_code.git']]])
+          checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: githubCredential, url: 'https://github.com/Jooney-95/kcs-sb-code.git']]])
           }
       post {
         failure {
@@ -77,7 +77,8 @@ pipeline {
           echo 'Docker Image Push success'
           sh "docker rmi ${dockerHubRegistry}:${currentBuild.number}"
           sh "docker rmi ${dockerHubRegistry}:latest"
-          slackSend (color: '#0AC9FF', message: "SUCCESS: Docker Image Push '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+          // Slack Notification
+          slackSend (color: '#0AC9FF', message: "SUCCESS: Docker Image Push '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")  
         }
       }
     }
@@ -91,7 +92,7 @@ pipeline {
           echo 'Container Deploy failure'
         }
         success {
-          echo 'Container Deploy success'  
+          echo 'Container Deploy success'
         }
       }
     }
