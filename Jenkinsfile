@@ -84,20 +84,20 @@ pipeline {
     }
     stage('k8s manifest file update') {
       steps {
-        git credentialsId: githubCredential,
-          url: 'https://github.com/hb9397/sb_code.git',
-          branch: 'main'  
+          git credentialsId: githubCredential,
+            url: 'https://github.com/hb9397/sb_code.git',
+            branch: 'main'  
 
-        // 이미지 태그 변경 후 메인 브랜치에 푸시
-        sh "git config --global user.email ${gitEmail}"
-        sh "git config --global user.name ${gitName}"
-        sh "sed -i 's/sbimage:.*/sbimage:${currentBuild.number}/g' deploy/sb-deploy.yml"
-        sh "git add ."
-        sh "git commit -m 'fix:${dockerHubRegistry} ${currentBuild.number} image versioning'"
-        sh "git branch -M main"
-        sh "git remote remove origin"
-        sh "git remote add origin git@github.com:hb9397/simple_sb.git"
-        sh "git push -u origin main
+          // 이미지 태그 변경 후 메인 브랜치에 푸시
+          sh "git config --global user.email ${gitEmail}"
+          sh "git config --global user.name ${gitName}"
+          sh "sed -i 's/sbimage:.*/sbimage:${currentBuild.number}/g' deploy/sb-deploy.yml"
+          sh "git add ."
+          sh "git commit -m 'fix:${dockerHubRegistry} ${currentBuild.number} image versioning'"
+          sh "git branch -M main"
+          sh "git remote remove origin"
+          sh "git remote add origin git@github.com:hb9397/simple_sb.git"
+          sh "git push -u origin main
 
           }
       post {
