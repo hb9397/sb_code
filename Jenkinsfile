@@ -97,7 +97,7 @@ pipeline {
           sh "git branch -M main"
           sh "git remote remove origin"
           sh "git remote add origin git@github.com:hb9397/sb_code.git"
-          sh "git push -u origin main
+          sh "git push -u origin main"
 
           }
       post {
